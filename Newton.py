@@ -30,7 +30,7 @@ def fn_D1X(x,y,e):
     return f1
 
 def fn_D2X(x,y,e):
-    f2= y**3 - (x+e) -1
+    f2= y**3 - (x+e) +1
     return f2
 
 #Y functions
@@ -39,34 +39,39 @@ def fn_D1Y(x,y,e):
     return f1
 
 def fn_D2Y(x,y,e):
-    f2= (y+e)**3 - x -1
+    f2= (y+e)**3 - x +1
     return f2
 
 def D(fx,fxh,h):
-    derivative = (fx-fxh)/h
+    derivative = (fxh-fx)/h
     return derivative
 
-xs=x-2*e
-ys=y-2*e
+xs=x+2*e
+ys=y+2*e
 Xs = np.array([[xs],[ys]])
 
 xn=x
 yn=y
 Xn = np.array([[xn],[yn]])
-E= np.array([[e],[e]])
+counter = 0
 
-for i in range(10):
+while np.max(np.abs(Xn - Xs)) > e and counter<10:
+    Xs=Xn
+    xn, yn = Xn.flatten()
 #Jacobian Values
-    j00=D(fn1(x,y),fn_D1X(x,y,e),h)
-    j01=D(fn2(x,y),fn_D2X(x,y,e),h)
-    j10=D(fn1(x,y),fn_D1Y(x,y,e),h)
-    j11=D(fn2(x,y),fn_D2Y(x,y,e),h)
+    j00=D(fn1(xn,yn),fn_D1X(xn,yn,e),h)
+    j10=D(fn2(xn,yn),fn_D2X(xn,yn,e),h)
+    j01=D(fn1(xn,yn),fn_D1Y(xn,yn,e),h)
+    j11=D(fn2(xn,y),fn_D2Y(xn,yn,e),h)
+   
 
-    F_matrix = np.array([[fn1(x,y)],[fn2(x,y)]])
+    F_matrix = np.array([[fn1(xn,yn)],[fn2(xn,yn)]])
     Jacobian_matrix = np.array([[j00,j01],[j10,j11]])
     P=np.linalg.inv(Jacobian_matrix)
-
-    Xn=np.subtract(Xs,np.dot(P,F_matrix))
-    Xs=Xn
-    if i==9:
-        print(Xn)
+    PF=np.dot(P,F_matrix)
+    Xn=np.add(Xs,PF)
+    counter += 1
+    xa,ya = Xn.flatten()
+    print(f"Rozwiązanie {counter}: x={xa}, y={ya}" )
+    print("----------------------------------------")
+    
