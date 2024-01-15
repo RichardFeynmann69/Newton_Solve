@@ -1,0 +1,6 @@
+Rozwiazanie 1: x=-2.908, y=-6.815 
+Rozwiazanie 2: x=-2.004, y=-5.007 
+Rozwiazanie 3: x=-1.834, y=-4.667 
+Rozwiazanie 4: x=-1.827, y=-4.654 
+Rozwiazanie 5: x=-1.827, y=-4.654 
+Rozwiazanie 6: x=-1.827, y=-4.654 
